@@ -5,13 +5,12 @@ let upperCase;
 let lowerCase;
 let numericChar;
 let specialChar;
+const upperCaseList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lowerCaseList = "abcdefghijklmnopqrstuvwxyz";
+const numberList = "0123456789";
+const specialList = "!\"#$%&()'*+,-./:;<=>?@[\\]^_`{|}~";
 
-const charList = [
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  "abcdefghijklmnopqrstuvwxyz",
-  "0123456789",
-  "!\"#$%&()'*+,-./:;<=>?@[\\]^_`{|}~",
-];
+let charList = [];
 // Write password to the #password input
 function writePassword() {
   length = window.prompt(
@@ -35,43 +34,8 @@ generateBtn.addEventListener("click", writePassword);
 
 function generatePassword() {
   let passwordString = "";
-  let max;
-  let randomObjects;
-
-  if (upperCase && lowerCase && numericChar && specialChar) {
-    max = 3;
-    randomObjects = Math.floor(Math.random() * (max + 1));
-  } else if (upperCase && lowerCase && numericChar && !specialChar) {
-    max = 2;
-    randomObjects = Math.floor(Math.random() * (max + 1));
-  } else if (upperCase && lowerCase && !numericChar && !specialChar) {
-    max = 1;
-    randomObjects = Math.floor(Math.random() * (max + 1));
-  } else if (upperCase && !lowerCase && !numericChar && !specialChar) {
-    max = 0;
-    randomObjects = Math.floor(Math.random() * (max + 1));
-  } else if (upperCase && !lowerCase && numericChar && !specialChar) {
-    max = 2;
-    do {
-      randomObjects = Math.floor(Math.random() * (max + 1));
-    } while (randomObjects !== 0 || randomObjects !== 2);
-  } else if (!upperCase && lowerCase && numericChar && specialChar) {
-    max = 2;
-    do {
-      randomObjects = Math.floor(Math.random() * (max + 1));
-    } while (randomObjects !== 1 || randomObjects !== 2 || randomObjects !== 3);
-  } else if (!upperCase && !lowerCase && numericChar && specialChar) {
-    max = 3;
-    do {
-      randomObjects = Math.floor(Math.random() * (max + 1));
-    } while (randomObjects !== 2 || randomObjects !== 3);
-  } else if (!upperCase && lowerCase && !numericChar && !specialChar) {
-    max = 1;
-    do {
-      randomObjects = Math.floor(Math.random() * (max + 1));
-    } while (randomObjects !== 1);
-  }
   for (let i = 0; i < length; i++) {
+    let randomObjects = Math.floor(Math.random() * (charList.length - 1 + 1));
     const stringLength = charList[randomObjects].length;
     const randomStringChar = Math.floor(Math.random() * stringLength);
     passwordString = passwordString + charList[randomObjects][randomStringChar];
@@ -80,10 +44,25 @@ function generatePassword() {
 }
 
 function characterChoice() {
+  charList = [];
   upperCase = window.confirm("Would you like to use uppercase characters?");
+  if (upperCase) {
+    charList.push(upperCaseList);
+  }
   lowerCase = window.confirm("Would you like to use lowercase characters?");
+  {
+    if (lowerCase) {
+      charList.push(lowerCaseList);
+    }
+  }
   numericChar = window.confirm("Would you like to use numeric characters?");
+  if (numericChar) {
+    charList.push(numberList);
+  }
   specialChar = window.confirm("Would you like to use special characters?");
+  if (specialChar) {
+    charList.push(specialList);
+  }
   if (!upperCase && !lowerCase && !numericChar && !specialChar) {
     window.alert("You have to chose at least one type of character!");
     characterChoice();
