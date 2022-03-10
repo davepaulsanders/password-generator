@@ -1,5 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
+
 // Global variables for prompts
 let length;
 let upperCase;
@@ -15,7 +16,6 @@ const specialList = "!\"#$%&()'*+,-./:;<=>?@[\\]^_`{|}~";
 // Empty array to push character lists that have been chosen
 
 let passwordCharList = [];
-
 // Write password to the #password input
 function writePassword() {
   length = window.prompt(
@@ -76,6 +76,7 @@ function characterChoice() {
 function generatePassword() {
   // Initializing empty string for password
 
+  document.querySelector("#password").value = "";
   let passwordString = "";
 
   for (let i = 0; i < length; i++) {
